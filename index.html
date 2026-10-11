@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- 
+    ============================================
+    PORTFOLIO - Priyanshu Kumar Panda
+    Phase 1: Foundation + Design System + Navbar + Hero
+    ============================================
+    - Semantic HTML5, accessible, responsive, mobile-first
+    - Uses CSS variables for theming (dark/light)
+    - No frameworks, no build tools
+  -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Priyanshu Kumar Panda - MCA student aspiring to be a Software Engineer. Portfolio showcasing projects, skills and experience.">
+  <meta name="color-scheme" content="dark light">
+  <title>Priyanshu Kumar Panda | Software Engineer</title>
+
+  <!-- Google Fonts: Space Grotesk (headings) + Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Scroll Progress Bar (top accent gradient) -->
+  <div id="scrollProgress" class="scroll-progress" aria-hidden="true">
+    <div class="scroll-progress__bar" id="scrollProgressBar"></div>
+  </div>
+
+  <!-- Page Loader / Preloader — PKP glowing (under 1.5s, respects reduced-motion) -->
+  <div id="pageLoader" class="page-loader" aria-hidden="true" aria-label="Page loading">
+    <div class="page-loader__inner">
+      <div class="page-loader__logo" aria-hidden="true">PKP</div>
+      <div class="page-loader__glow" aria-hidden="true"></div>
+      <div class="page-loader__bar" aria-hidden="true">
+        <div class="page-loader__bar-fill"></div>
+      </div>
+      <p class="page-loader__text">Loading…</p>
+    </div>
+  </div>
+
+  <!-- 
+    =====================
+    AMBIENT LIGHTING LAYER
+    =====================
+    - Decorative gradient orbs that float slowly
+    - Cursor spotlight that follows mouse (disabled on touch)
+    - aria-hidden so screen readers ignore them
+  -->
+  <div class="ambient-wrapper" aria-hidden="true">
+    <div class="orb orb--1"></div>
+    <div class="orb orb--2"></div>
+    <div class="orb orb--3"></div>
+    <div class="cursor-spotlight" id="cursorSpotlight"></div>
+  </div>
+
+  <!-- 
+    =====================
+    NAVBAR
+    =====================
+    - Sticky, glass-morphism, backdrop blur
+    - Left: logo / name
+    - Center: nav links (desktop) / slide drawer (mobile)
+    - Right: theme toggle + hamburger
+  -->
+  <header class="site-header">
+    <nav class="navbar container" aria-label="Primary navigation">
+      <!-- Logo / Name -->
+      <a href="#home" class="navbar__logo" aria-label="Go to homepage">
+        <span class="logo-icon" aria-hidden="true">◈</span>
+        <span class="logo-text">Priyanshu</span>
+      </a>
+
+      <!-- Nav Links (desktop + mobile drawer) -->
+      <ul class="navbar__menu" id="navMenu" role="list">
+        <li><a href="#home" class="nav-link active" data-nav="home">Home</a></li>
+        <li><a href="#about" class="nav-link" data-nav="about">About</a></li>
+        <li><a href="#skills" class="nav-link" data-nav="skills">Skills</a></li>
+        <li><a href="#projects" class="nav-link" data-nav="projects">Projects</a></li>
+        <li><a href="#experience" class="nav-link" data-nav="experience">Experience</a></li>
+        <li><a href="#achievements" class="nav-link" data-nav="achievements">Achievements</a></li>
+        <li><a href="#resume" class="nav-link" data-nav="resume">Resume</a></li>
+        <li><a href="#contact" class="nav-link" data-nav="contact">Contact</a></li>
+      </ul>
+
+      <!-- Right Actions: Theme Toggle + Hamburger -->
+      <div class="navbar__actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark / light theme" title="Toggle theme">
+          <!-- Sun icon (shown in dark mode) -->
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <!-- Moon icon (shown in light mode) -->
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="navMenu">
+          <span class="hamburger__line"></span>
+          <span class="hamburger__line"></span>
+          <span class="hamburger__line"></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile overlay (click to close menu) -->
+  <div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
+
+  <main>
+    <!-- 
+      =====================
+      HERO SECTION
+      =====================
+      - Full viewport height, centered content
+      - Big headline, typing animation, tagline, CTAs, socials, scroll indicator
+      - Fade-in-on-load animation
+    -->
+    <section id="home" class="hero">
+      <div class="container hero__container">
+        <div class="hero__content fade-in">
+          <!-- Eyebrow badge -->
+          <div class="hero__eyebrow">
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            <span>Available for opportunities</span>
+            <!-- Replace [YOUR TEXT HERE] if you want different eyebrow text -->
+          </div>
+
+          <!-- Main Headline -->
+          <h1 class="hero__title">
+            Hi, I'm <span class="gradient-text">Priyanshu Kumar Panda</span>
+          </h1>
+
+          <!-- Animated typing role -->
+          <h2 class="hero__subtitle" aria-live="polite" aria-atomic="true">
+            <span class="typing-static">I'm a</span>
+            <span class="typing-dynamic" id="typedText">Software Engineer</span><span class="typing-cursor" aria-hidden="true">|</span>
+          </h2>
+
+          <!-- Tagline - REPLACE PLACEHOLDER -->
+          <p class="hero__tagline">
+            [YOUR TEXT HERE — e.g., MCA student passionate about building scalable web applications and solving real-world problems with clean, efficient code.]
+          </p>
+
+          <!-- Call-to-action buttons -->
+          <div class="hero__actions">
+            <a href="#projects" class="btn btn--primary">
+              <span>View My Work</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+            <a href="assets/resume/resume.pdf" class="btn btn--secondary" download aria-label="Download resume PDF">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>Download Resume</span>
+            </a>
+          </div>
+
+          <!-- Social Icons -->
+          <div class="hero__socials" aria-label="Social links">
+            <!-- Replace href with your actual profile URLs -->
+            <a href="https://github.com/[YOUR-USERNAME]" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub profile">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </a>
+            <a href="https://linkedin.com/in/[YOUR-USERNAME]" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn profile">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.777 13.019H3.56V9h3.554v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+            <a href="mailto:[YOUR-EMAIL-HERE]" class="social-link" aria-label="Send email">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll down indicator -->
+      <a href="#about" class="scroll-indicator" aria-label="Scroll to About section">
+        <span class="scroll-indicator__text">Scroll</span>
+        <span class="scroll-indicator__mouse" aria-hidden="true">
+          <span class="scroll-indicator__wheel"></span>
+        </span>
+        <svg class="scroll-indicator__arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </a>
+    </section>
+
+    <!-- 
+      =====================
+      PLACEHOLDER SECTIONS
+      =====================
+      - Empty sections with correct ids so navbar links work
+      - Will be built in later phases
+      - Each has a container and a subtle placeholder note (hidden visually but useful for dev)
+    -->
+    <!-- 
+      =====================
+      ABOUT ME SECTION
+      =====================
+      - Reusable heading: label + title + gradient underline
+      - Two col: photo (left) / text (right), stacked on mobile
+      - Photo: gradient glowing border, animated glow, tilt on hover, fallback PKP
+      - Stats: data-target for easy editing, count-up on scroll
+      - Quick Facts + CTA buttons
+    -->
+    <section id="about" class="section section--about" aria-labelledby="about-heading">
+      <div class="container">
+        <!-- Reusable Section Header -->
+        <div class="section-header reveal">
+          <span class="section-label">01 — About Me</span>
+          <h2 id="about-heading" class="section-title">About <span class="gradient-text">Me</span></h2>
+          <div class="section-underline" aria-hidden="true"></div>
+          <p class="section-desc">[YOUR SECTION SUBTITLE HERE — e.g., Get to know me better]</p>
+        </div>
+
+        <div class="about__grid">
+          <!-- Photo Column -->
+          <div class="about__photo-col reveal">
+            <div class="about__photo-frame" id="photoFrame" aria-label="Profile photo container">
+              <div class="about__photo-glow" aria-hidden="true"></div>
+              <div class="about__photo-inner">
+                <!-- Replace src with your photo: assets/images/profile.jpg (600x600 recommended) -->
+                <img id="profileImg" src="assets/images/profile.jpg" alt="Portrait of Priyanshu Kumar Panda, MCA student and aspiring software engineer" width="400" height="400" loading="lazy" onerror="this.style.display='none';document.getElementById('photoFallback').classList.add('is-visible');">
+                <!-- Fallback shown if image missing -->
+                <div id="photoFallback" class="about__photo-fallback" aria-hidden="true">
+                  <span>PKP</span>
+                </div>
+              </div>
+              <!-- Floating badge -->
+              <div class="about__photo-badge" aria-hidden="true">
+                <span class="badge-dot"></span>
+                MCA Student
+              </div>
+            </div>
+          </div>
+
+          <!-- Content Column -->
+          <div class="about__content reveal">
+            <div class="about__intro">
+              <!-- REPLACE ALL [YOUR TEXT HERE] PARAGRAPHS WITH YOUR OWN INTRO (2-3 paragraphs, first person) -->
+              <p>
+                [YOUR TEXT HERE — Paragraph 1: e.g., Hi! I'm Priyanshu Kumar Panda, an MCA student passionate about software engineering. I love turning ideas into clean, efficient code and building web applications that solve real-world problems.]
+              </p>
+              <p>
+                [YOUR TEXT HERE — Paragraph 2: e.g., My journey started with curiosity about how apps work, which led me to explore data structures, algorithms, and full-stack development. I enjoy learning new technologies and collaborating on challenging projects.]
+              </p>
+              <p>
+                [YOUR TEXT HERE — Paragraph 3: e.g., When I'm not coding, you'll find me exploring open-source, participating in hackathons, or sharing knowledge with peers. I'm currently seeking opportunities to grow as a software engineer.]
+              </p>
+            </div>
+
+            <!-- Quick Facts -->
+            <ul class="about__facts" role="list" aria-label="Quick facts">
+              <li class="fact">
+                <span class="fact__icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                </span>
+                <span class="fact__label">Location</span>
+                <span class="fact__value">[YOUR CITY, STATE]</span>
+              </li>
+              <li class="fact">
+                <span class="fact__icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6"></path><path d="M22 10a10 10 0 0 0-20 0"></path><path d="M12 10a4 4 0 0 0 4-4H8a4 4 0 0 0 4 4z"></path></svg>
+                </span>
+                <span class="fact__label">Education</span>
+                <span class="fact__value">MCA — [YOUR UNIVERSITY]</span>
+              </li>
+              <li class="fact">
+                <span class="fact__icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </span>
+                <span class="fact__label">Email</span>
+                <span class="fact__value"><a href="mailto:[YOUR-EMAIL-HERE]" class="fact__link">[YOUR-EMAIL-HERE]</a></span>
+              </li>
+              <li class="fact">
+                <span class="fact__icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"></path></svg>
+                </span>
+                <span class="fact__label">Status</span>
+                <span class="fact__value">Open to Opportunities</span>
+              </li>
+            </ul>
+
+            <!-- Animated Stats: edit numbers via data-target, suffix via data-suffix -->
+            <div class="about__stats" id="aboutStats" aria-label="Statistics">
+              <div class="stat glass">
+                <span class="stat__number" data-target="12" data-suffix="+">0</span>
+                <span class="stat__label">Projects Completed</span>
+              </div>
+              <div class="stat glass">
+                <span class="stat__number" data-target="8" data-suffix="+">0</span>
+                <span class="stat__label">Certificates</span>
+              </div>
+              <div class="stat glass">
+                <span class="stat__number" data-target="15" data-suffix="+">0</span>
+                <span class="stat__label">Technologies Known</span>
+              </div>
+              <div class="stat glass">
+                <span class="stat__number" data-target="2" data-suffix="+">0</span>
+                <span class="stat__label">Years of Learning</span>
+              </div>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="about__actions">
+              <a href="assets/resume/resume.pdf" class="btn btn--primary" download aria-label="Download resume PDF">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Download Resume</span>
+              </a>
+              <a href="#contact" class="btn btn--secondary" aria-label="Scroll to contact section">
+                <span>Let's Talk</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      =====================
+      SKILLS SECTION
+      =====================
+      - Reusable heading
+      - Filter tabs (keyboard accessible, aria-selected)
+      - Glass cards with icon, name, level, animated progress bar
+      - Currently Learning pill strip
+      - Easy to copy: each .skill-card is one block -> change name/level/data-category/data-width
+    -->
+    <section id="skills" class="section section--skills" aria-labelledby="skills-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">02 — Skills</span>
+          <h2 id="skills-heading" class="section-title">My <span class="gradient-text">Skills</span></h2>
+          <div class="section-underline" aria-hidden="true"></div>
+          <p class="section-desc">[YOUR SKILLS INTRO HERE — e.g., Technologies I work with and I'm learning every day]</p>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="skills__filters reveal" role="tablist" aria-label="Skill categories">
+          <button class="filter-btn is-active" role="tab" aria-selected="true" data-filter="all" tabindex="0">All</button>
+          <button class="filter-btn" role="tab" aria-selected="false" data-filter="languages" tabindex="-1">Languages</button>
+          <button class="filter-btn" role="tab" aria-selected="false" data-filter="frontend" tabindex="-1">Frontend</button>
+          <button class="filter-btn" role="tab" aria-selected="false" data-filter="backend" tabindex="-1">Backend</button>
+          <button class="filter-btn" role="tab" aria-selected="false" data-filter="databases" tabindex="-1">Databases</button>
+          <button class="filter-btn" role="tab" aria-selected="false" data-filter="tools" tabindex="-1">Tools</button>
+          <button class="filter-btn" role="tab" aria-selected="false" data-filter="cs" tabindex="-1">Core CS</button>
+        </div>
+
+        <!-- Skills Grid: COPY a .skill-card block to add/edit a skill. Change data-category, icon emoji, name, level, data-width -->
+        <div class="skills__grid" id="skillsGrid">
+          <!-- LANGUAGES -->
+          <article class="skill-card glass reveal" data-category="languages">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">☕</span>
+              <span class="skill-card__level level--advanced">Advanced</span>
+            </div>
+            <h3 class="skill-card__name">Java</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" aria-label="Java proficiency 90%">
+              <div class="skill-bar__fill" data-width="90%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <article class="skill-card glass reveal" data-category="languages">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">🐍</span>
+              <span class="skill-card__level level--intermediate">Intermediate</span>
+            </div>
+            <h3 class="skill-card__name">Python</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" aria-label="Python proficiency 75%">
+              <div class="skill-bar__fill" data-width="75%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <article class="skill-card glass reveal" data-category="languages">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">🟨</span>
+              <span class="skill-card__level level--intermediate">Intermediate</span>
+            </div>
+            <h3 class="skill-card__name">JavaScript</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" aria-label="JavaScript proficiency 80%">
+              <div class="skill-bar__fill" data-width="80%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <article class="skill-card glass reveal" data-category="languages">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">⚙️</span>
+              <span class="skill-card__level level--intermediate">Intermediate</span>
+            </div>
+            <h3 class="skill-card__name">C</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" aria-label="C proficiency 70%">
+              <div class="skill-bar__fill" data-width="70%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <article class="skill-card glass reveal" data-category="languages">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">🗄️</span>
+              <span class="skill-card__level level--intermediate">Intermediate</span>
+            </div>
+            <h3 class="skill-card__name">SQL</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" aria-label="SQL proficiency 78%">
+              <div class="skill-bar__fill" data-width="78%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <!-- FRONTEND -->
+          <article class="skill-card glass reveal" data-category="frontend">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">🌐</span>
+              <span class="skill-card__level level--advanced">Advanced</span>
+            </div>
+            <h3 class="skill-card__name">HTML</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" aria-label="HTML proficiency 90%">
+              <div class="skill-bar__fill" data-width="90%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <article class="skill-card glass reveal" data-category="frontend">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">🎨</span>
+              <span class="skill-card__level level--advanced">Advanced</span>
+            </div>
+            <h3 class="skill-card__name">CSS</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" aria-label="CSS proficiency 85%">
+              <div class="skill-bar__fill" data-width="85%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <article class="skill-card glass reveal" data-category="frontend">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">⚛️</span>
+              <span class="skill-card__level level--beginner">Beginner</span>
+            </div>
+            <h3 class="skill-card__name">React Basics</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" aria-label="React Basics proficiency 45%">
+              <div class="skill-bar__fill" data-width="45%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <!-- BACKEND -->
+          <article class="skill-card glass reveal" data-category="backend">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">☕</span>
+              <span class="skill-card__level level--intermediate">Intermediate</span>
+            </div>
+            <h3 class="skill-card__name">Java Servlets / JSP</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" aria-label="Java Servlets/JSP proficiency 70%">
+              <div class="skill-bar__fill" data-width="70%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <article class="skill-card glass reveal" data-category="backend">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">🟢</span>
+              <span class="skill-card__level level--beginner">Beginner</span>
+            </div>
+            <h3 class="skill-card__name">Node.js Basics</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" aria-label="Node.js Basics proficiency 40%">
+              <div class="skill-bar__fill" data-width="40%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <article class="skill-card glass reveal" data-category="backend">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">🔗</span>
+              <span class="skill-card__level level--intermediate">Intermediate</span>
+            </div>
+            <h3 class="skill-card__name">REST APIs</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100" aria-label="REST APIs proficiency 65%">
+              <div class="skill-bar__fill" data-width="65%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <!-- DATABASES -->
+          <article class="skill-card glass reveal" data-category="databases">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">🐬</span>
+              <span class="skill-card__level level--intermediate">Intermediate</span>
+            </div>
+            <h3 class="skill-card__name">MySQL</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" aria-label="MySQL proficiency 75%">
+              <div class="skill-bar__fill" data-width="75%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <article class="skill-card glass reveal" data-category="databases">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">🍃</span>
+              <span class="skill-card__level level--beginner">Beginner</span>
+            </div>
+            <h3 class="skill-card__name">MongoDB Basics</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" aria-label="MongoDB Basics proficiency 40%">
+              <div class="skill-bar__fill" data-width="40%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <!-- TOOLS -->
+          <article class="skill-card glass reveal" data-category="tools">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">🔧</span>
+              <span class="skill-card__level level--intermediate">Intermediate</span>
+            </div>
+            <h3 class="skill-card__name">Git</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" aria-label="Git proficiency 80%">
+              <div class="skill-bar__fill" data-width="80%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <article class="skill-card glass reveal" data-category="tools">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">🐙</span>
+              <span class="skill-card__level level--intermediate">Intermediate</span>
+            </div>
+            <h3 class="skill-card__name">GitHub</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" aria-label="GitHub proficiency 80%">
+              <div class="skill-bar__fill" data-width="80%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <article class="skill-card glass reveal" data-category="tools">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">💻</span>
+              <span class="skill-card__level level--advanced">Advanced</span>
+            </div>
+            <h3 class="skill-card__name">VS Code</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" aria-label="VS Code proficiency 90%">
+              <div class="skill-bar__fill" data-width="90%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <article class="skill-card glass reveal" data-category="tools">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">🐧</span>
+              <span class="skill-card__level level--intermediate">Intermediate</span>
+            </div>
+            <h3 class="skill-card__name">Linux</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" aria-label="Linux proficiency 60%">
+              <div class="skill-bar__fill" data-width="60%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <article class="skill-card glass reveal" data-category="tools">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">📮</span>
+              <span class="skill-card__level level--intermediate">Intermediate</span>
+            </div>
+            <h3 class="skill-card__name">Postman</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100" aria-label="Postman proficiency 65%">
+              <div class="skill-bar__fill" data-width="65%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <!-- CORE CS -->
+          <article class="skill-card glass reveal" data-category="cs">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">🧩</span>
+              <span class="skill-card__level level--intermediate">Intermediate</span>
+            </div>
+            <h3 class="skill-card__name">Data Structures</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" aria-label="Data Structures proficiency 75%">
+              <div class="skill-bar__fill" data-width="75%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <article class="skill-card glass reveal" data-category="cs">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">🧠</span>
+              <span class="skill-card__level level--intermediate">Intermediate</span>
+            </div>
+            <h3 class="skill-card__name">Algorithms</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" aria-label="Algorithms proficiency 70%">
+              <div class="skill-bar__fill" data-width="70%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <article class="skill-card glass reveal" data-category="cs">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">🎯</span>
+              <span class="skill-card__level level--intermediate">Intermediate</span>
+            </div>
+            <h3 class="skill-card__name">OOP</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" aria-label="OOP proficiency 80%">
+              <div class="skill-bar__fill" data-width="80%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <article class="skill-card glass reveal" data-category="cs">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">🗃️</span>
+              <span class="skill-card__level level--intermediate">Intermediate</span>
+            </div>
+            <h3 class="skill-card__name">DBMS</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" aria-label="DBMS proficiency 72%">
+              <div class="skill-bar__fill" data-width="72%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <article class="skill-card glass reveal" data-category="cs">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">⚙️</span>
+              <span class="skill-card__level level--beginner">Beginner</span>
+            </div>
+            <h3 class="skill-card__name">Operating Systems</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100" aria-label="Operating Systems proficiency 55%">
+              <div class="skill-bar__fill" data-width="55%" style="width:0%"></div>
+            </div>
+          </article>
+
+          <article class="skill-card glass reveal" data-category="cs">
+            <div class="skill-card__top">
+              <span class="skill-card__icon" aria-hidden="true">🌐</span>
+              <span class="skill-card__level level--beginner">Beginner</span>
+            </div>
+            <h3 class="skill-card__name">Computer Networks</h3>
+            <div class="skill-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" aria-label="Computer Networks proficiency 50%">
+              <div class="skill-bar__fill" data-width="50%" style="width:0%"></div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Currently Learning Strip -->
+        <div class="learning-strip glass reveal" aria-label="Currently learning">
+          <h3 class="learning-strip__title">
+            <span aria-hidden="true">🌱</span> Currently Learning
+          </h3>
+          <div class="learning-strip__pills">
+            <!-- EDIT THESE PILLS: replace [YOUR TOPIC HERE] with e.g., System Design, Docker, etc. -->
+            <span class="pill">Spring Boot</span>
+            <span class="pill">System Design</span>
+            <span class="pill">TypeScript</span>
+            <span class="pill">DSA — Graphs</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      =====================
+      PROJECTS SECTION
+      =====================
+      - Reusable heading (03 / Projects)
+      - Filter buttons: All, Web, Java, Python, Database (aria-pressed)
+      - Grid generated from JS array at top of js/main.js (projectsData)
+      - Featured card spans full width (image left, details + features right)
+      - Glass cards with image fallback, tech pills, Live/GitHub/Details buttons, hover lift+glow+zoom
+    -->
+    <section id="projects" class="section section--projects" aria-labelledby="projects-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">03 — Projects</span>
+          <h2 id="projects-heading" class="section-title">Featured <span class="gradient-text">Projects</span></h2>
+          <div class="section-underline" aria-hidden="true"></div>
+          <p class="section-desc">[YOUR PROJECTS INTRO HERE — e.g., A selection of builds that sharpened my problem-solving and development skills]</p>
+        </div>
+
+        <!-- Filter Buttons: data-filter must match project.category in js/main.js -->
+        <div class="projects__filters reveal" role="group" aria-label="Project category filters">
+          <button class="filter-btn is-active" data-filter="all" aria-pressed="true" type="button">All</button>
+          <button class="filter-btn" data-filter="web" aria-pressed="false" type="button">Web</button>
+          <button class="filter-btn" data-filter="java" aria-pressed="false" type="button">Java</button>
+          <button class="filter-btn" data-filter="python" aria-pressed="false" type="button">Python</button>
+          <button class="filter-btn" data-filter="database" aria-pressed="false" type="button">Database</button>
+        </div>
+
+        <!-- Grid is populated by JS: js/main.js -> projectsData[] -->
+        <div class="projects__grid" id="projectsGrid" aria-live="polite" aria-busy="false">
+          <!-- JS will inject .project-card elements here. Fallback if JS disabled: -->
+          <noscript><p class="text-muted">Enable JavaScript to view projects. Edit projectsData in js/main.js to add your own.</p></noscript>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      =====================
+      EXPERIENCE & EDUCATION SECTION
+      =====================
+      - Reusable heading (04 / Journey)
+      - Tabs: Education / Experience (role="tablist", keyboard navigable)
+      - Vertical timeline: glowing gradient line centre desktop (alternating cards), left side mobile
+      - Each item has glowing dot, date, title, org, 2-3 bullets, reveal on scroll
+      - Content generated from JS arrays: educationData[] & experienceData[] in js/main.js
+    -->
+    <section id="experience" class="section section--experience" aria-labelledby="experience-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">04 — Journey</span>
+          <h2 id="experience-heading" class="section-title">Experience &amp; <span class="gradient-text">Education</span></h2>
+          <div class="section-underline" aria-hidden="true"></div>
+          <p class="section-desc">[YOUR JOURNEY INTRO HERE — e.g., My academic path and hands-on experience so far]</p>
+        </div>
+
+        <!-- Journey Tabs -->
+        <div class="journey__tabs reveal" role="tablist" aria-label="Journey tabs">
+          <button class="journey-tab is-active" role="tab" aria-selected="true" aria-controls="panel-education" id="tab-education" data-journey="education" type="button">Education</button>
+          <button class="journey-tab" role="tab" aria-selected="false" aria-controls="panel-experience" id="tab-experience" data-journey="experience" type="button">Experience</button>
+        </div>
+
+        <!-- Timeline Panels -->
+        <div class="journey__panels">
+          <!-- Education Timeline -->
+          <div class="journey__panel is-active" role="tabpanel" id="panel-education" aria-labelledby="tab-education">
+            <div class="timeline" id="timelineEducation" aria-label="Education timeline">
+              <!-- JS injects .timeline__item here from educationData[] -->
+            </div>
+          </div>
+          <!-- Experience Timeline -->
+          <div class="journey__panel" role="tabpanel" id="panel-experience" aria-labelledby="tab-experience" hidden>
+            <div class="timeline" id="timelineExperience" aria-label="Experience timeline">
+              <!-- JS injects .timeline__item here from experienceData[] -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      =====================
+      ACHIEVEMENTS / CERTIFICATES SECTION
+      =====================
+      - Reusable heading (05 / Achievements)
+      - Top highlight counters auto-calculated from certificatesData[] in js/main.js
+      - Filter buttons: All, Course, Hackathon, Award, Workshop
+      - Gallery grid generated from certificatesData[] (glass cards, image fallback, verify link)
+      - Click card -> lightbox (full-size image, Prev/Next, keyboard, focus trap)
+      - Other Achievements mini-timeline below gallery (from otherAchievementsData[])
+    -->
+    <section id="achievements" class="section section--achievements" aria-labelledby="achievements-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">05 — Achievements</span>
+          <h2 id="achievements-heading" class="section-title">Certificates &amp; <span class="gradient-text">Achievements</span></h2>
+          <div class="section-underline" aria-hidden="true"></div>
+          <p class="section-desc">[YOUR ACHIEVEMENTS INTRO HERE — e.g., Certifications, hackathons and recognitions that mark my learning journey]</p>
+        </div>
+
+        <!-- Highlight Counters — values auto-filled from certificatesData[] + count-up on scroll -->
+        <div class="achievements__counters reveal" id="achievementsCounters" aria-label="Achievement highlights">
+          <div class="stat glass">
+            <span class="stat__number" id="counterTotal" data-target="0">0</span>
+            <span class="stat__label">Certificates</span>
+          </div>
+          <div class="stat glass">
+            <span class="stat__number" id="counterHackathons" data-target="0">0</span>
+            <span class="stat__label">Hackathons</span>
+          </div>
+          <div class="stat glass">
+            <span class="stat__number" id="counterAwards" data-target="0">0</span>
+            <span class="stat__label">Awards</span>
+          </div>
+          <div class="stat glass">
+            <span class="stat__number" id="counterWorkshops" data-target="0">0</span>
+            <span class="stat__label">Workshops</span>
+          </div>
+        </div>
+
+        <!-- Certificate Filters — data-filter must match certificatesData[].category -->
+        <div class="certificates__filters reveal" role="group" aria-label="Certificate category filters">
+          <button class="filter-btn is-active" data-filter="all" aria-pressed="true" type="button">All</button>
+          <button class="filter-btn" data-filter="course" aria-pressed="false" type="button">Course</button>
+          <button class="filter-btn" data-filter="hackathon" aria-pressed="false" type="button">Hackathon</button>
+          <button class="filter-btn" data-filter="award" aria-pressed="false" type="button">Award</button>
+          <button class="filter-btn" data-filter="workshop" aria-pressed="false" type="button">Workshop</button>
+        </div>
+
+        <!-- Certificates Gallery — populated from js/main.js -> certificatesData[] -->
+        <div class="certificates__grid" id="certificatesGrid" aria-live="polite" aria-busy="false">
+          <noscript><p class="section-desc" style="text-align:center; grid-column:1/-1;">Enable JavaScript to view certificates. Edit certificatesData in js/main.js to add your own.</p></noscript>
+        </div>
+
+        <!-- Other Achievements — mini-timeline / badge list without certificates -->
+        <div class="other-achievements glass reveal" aria-label="Other achievements">
+          <h3 class="other-achievements__title">
+            <span aria-hidden="true">✦</span> Other Achievements
+          </h3>
+          <p class="other-achievements__subtitle">[YOUR SUBTITLE — e.g., Rankings, leadership and recognitions without a formal certificate]</p>
+          <ul class="other-achievements__list" id="otherAchievementsList" role="list">
+            <!-- JS injects from otherAchievementsData[] -->
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      =====================
+      RESUME SECTION
+      =====================
+      - Reusable heading (06 / Resume)
+      - Styled PDF viewer card with glowing border (<iframe> + fallback)
+      - Action buttons: Download, Open in New Tab, Print
+      - Resume Highlights summary card (placeholders) + Last updated label
+      - On mobile: viewer stacks below highlights, buttons remain prominent
+    -->
+    <section id="resume" class="section section--resume" aria-labelledby="resume-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">06 — Resume</span>
+          <h2 id="resume-heading" class="section-title">My <span class="gradient-text">Resume</span></h2>
+          <div class="section-underline" aria-hidden="true"></div>
+          <p class="section-desc">[YOUR RESUME INTRO HERE — e.g., Download or view my latest resume below]</p>
+        </div>
+
+        <div class="resume__layout">
+          <!-- Left / Main: viewer + actions -->
+          <div class="resume__main">
+            <!-- Actions bar -->
+            <div class="resume__actions reveal" aria-label="Resume actions">
+              <div class="resume__actions-left">
+                <a href="assets/resume/resume.pdf" download class="btn btn--primary" aria-label="Download resume PDF">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                  <span>Download Resume</span>
+                </a>
+                <a href="assets/resume/resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn--secondary" aria-label="Open resume in new tab">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                  <span>Open in New Tab</span>
+                </a>
+                <button type="button" class="btn btn--ghost" id="resumePrintBtn" aria-label="Print resume">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                  <span>Print</span>
+                </button>
+              </div>
+              <span class="resume__updated" id="resumeUpdated">[Last updated: May 2026]</span>
+            </div>
+
+            <!-- PDF Viewer Card with glowing border -->
+            <div class="resume__viewer glass reveal" aria-label="Resume PDF viewer">
+              <div class="resume__viewer-glow" aria-hidden="true"></div>
+              <div class="resume__viewer-inner">
+                <iframe id="resumeFrame" src="assets/resume/resume.pdf" title="Priyanshu Kumar Panda — Resume PDF" loading="lazy" aria-label="Embedded resume PDF"></iframe>
+                <!-- Fallback for browsers that block inline PDFs (also shown on JS error) -->
+                <div id="resumeFallback" class="resume__fallback" role="status" aria-live="polite">
+                  <p>Your browser can't display the PDF inline.</p>
+                  <a href="assets/resume/resume.pdf" download class="btn btn--primary btn--sm">Download Resume</a>
+                  <a href="assets/resume/resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn--secondary btn--sm">Open in New Tab</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mobile-only prominent actions (hidden on desktop via CSS) -->
+            <div class="resume__mobile-actions" aria-hidden="true">
+              <a href="assets/resume/resume.pdf" download class="btn btn--primary">Download Resume</a>
+              <a href="assets/resume/resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">Open in New Tab</a>
+            </div>
+          </div>
+
+          <!-- Right: Resume Highlights summary card -->
+          <aside class="resume__side">
+            <div class="resume-highlights glass reveal" aria-label="Resume highlights">
+              <h3 class="resume-highlights__title">
+                <span aria-hidden="true">⚡</span> Resume Highlights
+              </h3>
+              <p class="resume-highlights__subtitle">[Quick snapshot for visitors who don't open the PDF]</p>
+
+              <div class="highlight-group">
+                <h4 class="highlight-group__heading">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6"></path><path d="M22 10a10 10 0 0 0-20 0"></path><path d="M12 10a4 4 0 0 0 4-4H8a4 4 0 0 0 4 4z"></path></svg>
+                  Education
+                </h4>
+                <ul class="highlight-list" role="list">
+                  <li>[MCA — YOUR COLLEGE, 2024–Present, CGPA: YOUR SCORE]</li>
+                  <li>[BACHELOR — YOUR DEGREE, UNIVERSITY, YEAR]</li>
+                  <li>[HIGHER SECONDARY — SCHOOL, YEAR, SCORE]</li>
+                </ul>
+              </div>
+
+              <div class="highlight-group">
+                <h4 class="highlight-group__heading">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 18l6-6-6-6"></path><path d="M8 6l-6 6 6 6"></path></svg>
+                  Top Skills
+                </h4>
+                <div class="highlight-pills" aria-label="Top skills">
+                  <span class="pill">Java</span>
+                  <span class="pill">JavaScript</span>
+                  <span class="pill">MySQL</span>
+                  <span class="pill">HTML/CSS</span>
+                  <span class="pill">[YOUR SKILL 5]</span>
+                  <span class="pill">[YOUR SKILL 6]</span>
+                </div>
+              </div>
+
+              <div class="highlight-group">
+                <h4 class="highlight-group__heading">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"></path></svg>
+                  Top Projects
+                </h4>
+                <ul class="highlight-list" role="list">
+                  <li>[Hostel Leave Management System — HTML/CSS/JS/MySQL]</li>
+                  <li>[Library Management System — Java/MySQL]</li>
+                  <li>[YOUR PROJECT 3 — one line]</li>
+                </ul>
+              </div>
+
+              <div class="highlight-group highlight-group--last">
+                <h4 class="highlight-group__heading">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                  Contact
+                </h4>
+                <p class="highlight-contact">[YOUR EMAIL] · [YOUR PHONE] · [YOUR CITY]</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      =====================
+      CONTACT SECTION
+      =====================
+      - Reusable heading (07 / Contact), friendly line
+      - Two-col: info cards left (glass, glow), form right
+      - Info cards: Email (copy button + toast), Phone, Location, LinkedIn, GitHub
+      - Form: Name, Email, Subject, Message + honeypot, floating labels, validation, aria-live, glow focus
+      - Availability badge pulsing green dot
+      - Endpoint in js/main.js -> FORM_ENDPOINT (Formspree / Web3Forms)
+    -->
+    <section id="contact" class="section section--contact" aria-labelledby="contact-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">07 — Contact</span>
+          <h2 id="contact-heading" class="section-title">Get in <span class="gradient-text">Touch</span></h2>
+          <div class="section-underline" aria-hidden="true"></div>
+          <p class="section-desc">[YOUR TEXT HERE — e.g., I'm open to internships, collaborations and freelance work. If you have an opportunity or just want to say hi, I'd love to hear from you!]</p>
+          <!-- Availability badge — edit text as needed -->
+          <div class="availability-badge reveal" aria-label="Availability status">
+            <span class="availability-dot" aria-hidden="true"></span>
+            <span>[YOUR AVAILABILITY TEXT HERE — e.g., Open to work — Available for internships & collaborations]</span>
+          </div>
+        </div>
+
+        <div class="contact__grid">
+          <!-- Contact Info Cards (left) -->
+          <div class="contact__info reveal" aria-label="Contact information">
+            <!-- Email Card -->
+            <div class="contact-card glass">
+              <a href="mailto:[YOUR-EMAIL-HERE]" class="contact-card__link" aria-label="Send email to [YOUR-EMAIL-HERE]">
+                <span class="contact-card__icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </span>
+                <span class="contact-card__content">
+                  <span class="contact-card__label">Email</span>
+                  <span class="contact-card__value" id="contactEmailValue">[YOUR-EMAIL-HERE]</span>
+                </span>
+              </a>
+              <button type="button" class="contact-card__copy btn btn--ghost btn--sm" data-copy-email="[YOUR-EMAIL-HERE]" aria-label="Copy email address">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v3"></path></svg>
+                Copy
+              </button>
+            </div>
+
+            <!-- Phone Card (optional — delete this block if you don't want to show phone) -->
+            <a href="tel:[YOUR-PHONE-HERE]" class="contact-card glass" aria-label="Call [YOUR-PHONE-HERE]">
+              <span class="contact-card__icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12 1.33.43 2.63.9 3.88a2 2 0 0 1-.57 2.16l-1.27 1.27a17.5 17.5 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.16-.57c1.25.47 2.55.78 3.88.9A2 2 0 0 1 22 16.92z"></path></svg>
+              </span>
+              <span class="contact-card__content">
+                <span class="contact-card__label">Phone</span>
+                <span class="contact-card__value">[YOUR-PHONE-HERE]</span>
+              </span>
+              <span class="contact-card__arrow" aria-hidden="true">↗</span>
+            </a>
+
+            <!-- Location Card -->
+            <div class="contact-card glass" aria-label="Location">
+              <span class="contact-card__icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </span>
+              <span class="contact-card__content">
+                <span class="contact-card__label">Location</span>
+                <span class="contact-card__value">[YOUR CITY, STATE]</span>
+              </span>
+            </div>
+
+            <!-- LinkedIn Card -->
+            <a href="https://linkedin.com/in/[YOUR-USERNAME]" target="_blank" rel="noopener noreferrer" class="contact-card glass" aria-label="LinkedIn profile">
+              <span class="contact-card__icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.777 13.019H3.56V9h3.554v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </span>
+              <span class="contact-card__content">
+                <span class="contact-card__label">LinkedIn</span>
+                <span class="contact-card__value">linkedin.com/in/[YOUR-USERNAME]</span>
+              </span>
+              <span class="contact-card__arrow" aria-hidden="true">↗</span>
+            </a>
+
+            <!-- GitHub Card -->
+            <a href="https://github.com/[YOUR-USERNAME]" target="_blank" rel="noopener noreferrer" class="contact-card glass" aria-label="GitHub profile">
+              <span class="contact-card__icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              </span>
+              <span class="contact-card__content">
+                <span class="contact-card__label">GitHub</span>
+                <span class="contact-card__value">github.com/[YOUR-USERNAME]</span>
+              </span>
+              <span class="contact-card__arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <!-- Contact Form (right) -->
+          <div class="contact__form-wrap glass reveal" aria-label="Contact form">
+            <h3 class="contact-form__title">Send a message</h3>
+            <p class="contact-form__subtitle">[YOUR FORM SUBTITLE HERE — e.g., I'll reply within 24 hours]</p>
+
+            <form id="contactForm" class="contact-form" novalidate aria-describedby="formStatus">
+              <!-- Honeypot — keep hidden, bots will fill it -->
+              <div class="honeypot" aria-hidden="true" style="position:absolute; left:-5000px; opacity:0; pointer-events:none;">
+                <label for="contactWebsite">Leave this field empty</label>
+                <input type="text" id="contactWebsite" name="website" tabindex="-1" autocomplete="off">
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <input type="text" id="contactName" name="name" class="form-input" placeholder=" " required autocomplete="name" aria-describedby="errorName">
+                  <label for="contactName" class="form-label">Name <span aria-hidden="true">*</span></label>
+                  <span id="errorName" class="form-error" role="alert"></span>
+                </div>
+                <div class="form-group">
+                  <input type="email" id="contactEmail" name="email" class="form-input" placeholder=" " required autocomplete="email" aria-describedby="errorEmail">
+                  <label for="contactEmail" class="form-label">Email <span aria-hidden="true">*</span></label>
+                  <span id="errorEmail" class="form-error" role="alert"></span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <input type="text" id="contactSubject" name="subject" class="form-input" placeholder=" " required aria-describedby="errorSubject">
+                <label for="contactSubject" class="form-label">Subject <span aria-hidden="true">*</span></label>
+                <span id="errorSubject" class="form-error" role="alert"></span>
+              </div>
+
+              <div class="form-group">
+                <textarea id="contactMessage" name="message" class="form-input form-textarea" placeholder=" " required rows="5" aria-describedby="errorMessage"></textarea>
+                <label for="contactMessage" class="form-label">Message <span aria-hidden="true">*</span></label>
+                <span id="errorMessage" class="form-error" role="alert"></span>
+                <span class="form-hint" id="messageHint">At least 10 characters</span>
+              </div>
+
+              <button type="submit" class="btn btn--primary contact-form__submit" id="contactSubmit" aria-label="Send message">
+                <span class="btn__text">Send Message</span>
+                <span class="btn__loader" aria-hidden="true" hidden>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spin" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
+                  Sending…
+                </span>
+              </button>
+
+              <div id="formStatus" class="form-status" role="status" aria-live="polite" aria-atomic="true"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 
+    =====================
+    FOOTER — Glass style with quick nav, socials, copyright (year via JS)
+    =====================
+  -->
+  <footer class="site-footer glass" aria-label="Site footer">
+    <div class="container">
+      <div class="footer__grid">
+        <!-- Brand -->
+        <div class="footer__brand">
+          <a href="#home" class="footer__logo" aria-label="Back to top — Home">
+            <span class="logo-icon" aria-hidden="true">◈</span>
+            <span class="logo-text">Priyanshu</span>
+          </a>
+          <p class="footer__tagline">[YOUR FOOTER TAGLINE HERE — e.g., MCA student · Aspiring Software Engineer · Building clean, user-focused products]</p>
+        </div>
+
+        <!-- Quick Navigation -->
+        <nav class="footer__nav" aria-label="Quick navigation">
+          <h4 class="footer__heading">Navigate</h4>
+          <ul role="list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#achievements">Achievements</a></li>
+            <li><a href="#resume">Resume</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+
+        <!-- Socials -->
+        <div class="footer__social" aria-label="Social links">
+          <h4 class="footer__heading">Connect</h4>
+          <div class="footer__social-links">
+            <a href="https://github.com/[YOUR-USERNAME]" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+            <a href="https://linkedin.com/in/[YOUR-USERNAME]" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.777 13.019H3.56V9h3.554v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="mailto:[YOUR-EMAIL-HERE]" class="social-link" aria-label="Email">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copy">© <span id="currentYear">2026</span> Priyanshu Kumar Panda. Built with HTML, CSS &amp; JavaScript.</p>
+        <p class="footer__muted">[YOUR FOOTER TEXT HERE — e.g., Designed with care · Open to opportunities]</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top — floating, appears after scroll, circular progress ring -->
+  <button id="backToTop" class="back-to-top" type="button" aria-label="Back to top" hidden>
+    <svg class="back-to-top__progress" width="52" height="52" viewBox="0 0 52 52" aria-hidden="true">
+      <circle class="back-to-top__track" cx="26" cy="26" r="22" fill="none" stroke-width="3"></circle>
+      <circle class="back-to-top__fill" cx="26" cy="26" r="22" fill="none" stroke-width="3" stroke-linecap="round"></circle>
+    </svg>
+    <span class="back-to-top__icon" aria-hidden="true">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg>
+    </span>
+  </button>
+
+  <!-- Toast Container (for "Email copied!" etc.) -->
+  <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- 
+    =====================
+    PROJECT MODAL (hidden by default)
+    =====================
+    - Accessible dialog: role="dialog", aria-modal, aria-labelledby, aria-hidden, focus trap, Esc/backdrop close
+    - Content filled dynamically from projectsData[] when "Details" is clicked
+  -->
+  <div id="projectModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true" hidden>
+    <div class="modal__backdrop" data-close-modal aria-hidden="true"></div>
+    <div class="modal__dialog glass" role="document">
+      <button class="modal__close" type="button" aria-label="Close project details" data-close-modal>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div class="modal__media">
+        <img id="modalImage" src="" alt="" loading="lazy">
+        <!-- Fallback gradient shown if image missing -->
+        <div id="modalFallback" class="modal__fallback" aria-hidden="true">
+          <span class="gradient-text">Project Preview</span>
+        </div>
+      </div>
+      <div class="modal__body">
+        <h3 id="modalTitle" class="modal__title">[Project Title]</h3>
+        <p id="modalDesc" class="modal__desc">[Full description will appear here]</p>
+        <h4 class="modal__subtitle">Key Features</h4>
+        <ul id="modalFeatures" class="modal__features" role="list"></ul>
+        <div id="modalTags" class="modal__tags" aria-label="Tech stack"></div>
+        <div id="modalLinks" class="modal__links"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 
+    =====================
+    CERTIFICATE LIGHTBOX (hidden by default)
+    =====================
+    - Accessible dialog: role="dialog", aria-modal, focus trap, Esc/backdrop/Prev/Next
+    - Content filled from certificatesData[] in js/main.js
+  -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Certificate preview" aria-hidden="true" hidden>
+    <div class="lightbox__backdrop" data-close-lightbox aria-hidden="true"></div>
+    <div class="lightbox__dialog glass" role="document">
+      <button class="lightbox__close" type="button" aria-label="Close certificate preview" data-close-lightbox>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <button class="lightbox__nav lightbox__nav--prev" type="button" aria-label="Previous certificate" data-lightbox-prev>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <button class="lightbox__nav lightbox__nav--next" type="button" aria-label="Next certificate" data-lightbox-next>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="lightbox__media">
+        <img id="lightboxImage" src="" alt="" loading="eager">
+        <div id="lightboxFallback" class="lightbox__fallback" aria-hidden="true">
+          <span class="gradient-text">Certificate Preview</span>
+        </div>
+      </div>
+      <div class="lightbox__caption">
+        <h3 id="lightboxTitle" class="lightbox__title">[Certificate Title]</h3>
+        <p id="lightboxIssuer" class="lightbox__issuer">[Issuer]</p>
+        <p id="lightboxDate" class="lightbox__date">[Date]</p>
+        <a id="lightboxVerify" href="#" target="_blank" rel="noopener noreferrer" class="btn btn--secondary btn--sm" hidden>Verify Certificate</a>
+        <span id="lightboxCounter" class="lightbox__counter" aria-live="polite">1 / 4</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript -->
+  <script src="js/main.js"></script>
+</body>
+</html>
